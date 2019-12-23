@@ -35,7 +35,6 @@ app.get('/', function(req,res){
         if (err) {
             return res.render.status(500).send('<h1>ERROR</h1>');
         } else{
-            console.log(results)
             res.render('homePage',{results, Locations, req});
         }
     });
