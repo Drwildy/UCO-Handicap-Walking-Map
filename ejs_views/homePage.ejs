@@ -47,7 +47,7 @@
     <!--Going to insert a search bar for the maps-->
     
     <!--The first function is to use autocomplete-->
-    <div style="display: none">
+    <div class = 'mainDiv' style="display: none">
         <input id="origin-input" class="controls" type="text"
             placeholder="=Enter an origin location">
         <input id="destination-input" class="controls" type="text"
@@ -83,20 +83,29 @@
         <button id="search">Search</button>
         <button id="get">Get Directions</button>
     <script>
-        $(function firstBox(){
-            var alreadyFilled = false;
+        $(function AutoCompleteBox(){
+            var dID1 = '#dialog1';
+            var dID2 = '#dialog2';
+            var acID1 = '#autocomplete1';
+            var acID2 = '#autocomplete2';
+            alreadyFilled = false; //Global for the sake of clearing the field
+            alreadyFilled2 = false;
+
             
             //Initialize autofill box with 
-            function initDialog(){
-                clearDialog();
+            function initDialog(id){
+                clearDialog(id);
                 <% for (const location of results) { %>
-                     $('#dialog1').append('<div>' + '<%= location.title %>' + '<div>');
+                     $(id).append('<div>' + '<%= location.title %>' + '<div>');
                 <% } %>
             }
 
-            function clearDialog(){
-                $('#dialog1').empty();
+            function clearDialog(id){
+                $(id).empty();
             }
+
+            initDialog('#dialog1');
+            initDialog('#dialog2');
             
             $('#autocomplete1 input').click(function(){
                 if(!alreadyFilled){
@@ -104,26 +113,58 @@
                 }
             });
 
+            $('#autocomplete2 input').click(function(){
+                if(!alreadyFilled2){
+                    $('#dialog2').addClass('open');
+                }
+            });
+
+            $(document).click(function(event){
+                $target = $(event.target);
+                if(!$target.is('#starttext')){
+                  $('#dialog1').removeClass('open');
+                }
+
+                if(!$target.is('#endtext')){
+                  $('#dialog2').removeClass('open');
+                }
+            });
+
             $('body').on('click', '#dialog1 > div', function(){
                 $('#autocomplete1 input').val($(this).text()).focus();
                 $('#autocomplete1 .close').addClass('visible');
+                $('#dialog1').removeClass('open');
                 alreadyFilled = true;
+            });
+
+            $('body').on('click', '#dialog2 > div', function(){
+                $('#autocomplete2 input').val($(this).text()).focus();
+                $('#autocomplete2 .close').addClass('visible');
+                $('#dialog2').removeClass('open');
+                alreadyFilled2 = true;
             });
 
             $('#autocomplete1 .close').click(function() {
                 alreadyFilled = false;
-                $('#dialog1').addClass('close');
+                $('#dialog1').removeClass('close');
                 $('#autocomplete1 input').val('').focus();
                 $(this).removeClass('visible');
             });
 
-        function match(str) {
+            $('#autocomplete2 .close').click(function() {
+                alreadyFilled2 = false;
+                $('#dialog2').removeClass('close');
+                $('#autocomplete2 input').val('').focus();
+                $(this).removeClass('visible');
+            });
+
+        function match(str, id) {
             str = str.toLowerCase();
-            clearDialog();
+            clearDialog(id);
  
             <% for (const location of results) { %>
                 if( '<%= location.title %>'.toLowerCase().startsWith(str)){
-                    $('#dialog1').append('<div>' + '<%= location.title%>' + '</div>');
+                    $(id).append('<div>' + '<%= location.title%>' + '</div>');
                 }
             <% } %>
         }
@@ -131,73 +172,25 @@
             $('#autocomplete1 input').on('input', function(){
                 $('#dialog1').addClass('open');
                 alreadyFilled = false;
-                match($(this).val());
+                match($(this).val(), '#dialog1');
             });
 
+            $('#autocomplete2 input').on('input', function(){
+                $('#dialog2').addClass('open');
+                alreadyFilled2 = false;
+                match($(this).val(), '#dialog2');
+            });
+
+            /*
             $('body').click(function(e){
                 if(!$(e.target).is('input, .close')){
                     $('#dialog1').removeClass('open');
                 }
-            });
-            initDialog();
-        })
-        $(function secondBox(){
-            var alreadyFilled = false;
-            
-            //Initialize autofill box with 
-            function initDialog(){
-                clearDialog();
-                <% for (const location of results) { %>
-                     $('#dialog2').append('<div>' + '<%= location.title %>' + '<div>');
-                <% } %>
-            }
+            });*/
 
-            function clearDialog(){
-                $('#dialog2').empty();
-            }
-            
-            $('#autocomplete2 input').click(function(){
-                if(!alreadyFilled){
-                    $('#dialog2').addClass('open');
-                }
-            });
 
-            $('body').on('click', '#dialog2 > div', function(){
-                $('#autocomplete2 input').val($(this).text()).focus();
-                $('#autocomplete2 .close').addClass('visible');
-                alreadyFilled = true;
-            });
+            //initDialog();
 
-            $('#autocomplete2 .close').click(function() {
-                alreadyFilled = false;
-                $('#dialog2').addClass('open');
-                $('#autocomplete2 input').val('').focus();
-                $(this).removeClass('visible');
-            });
-
-        function match(str) {
-            str = str.toLowerCase();
-            clearDialog();
- 
-            <% for (const location of results) { %>
-                if( '<%= location.title %>'.toLowerCase().startsWith(str)){
-                    $('#dialog2').append('<div>' + '<%= location.title%>' + '</div>');
-                }
-            <% } %>
-        }
-
-            $('#autocomplete2 input').on('input', function(){
-                $('#dialog2').addClass('open');
-                alreadyFilled = false;
-                match($(this).val());
-            });
-
-            $('body').click(function(e){
-                if(!$(e.target).is('input, .close')){
-                    $('#dialog2').removeClass('open');
-                }
-            });
-            initDialog();
         })
     </script>
 
@@ -219,7 +212,7 @@
                     
             //Loop through DB and add markers
             <% for (const location of results) { %>
-                addMarker({coords:{lat: <%=location.lat%>, lng: <%=location.lng%> }, title: '<%=location.yitle%>' });
+                addMarker({coords:{lat: <%=location.lat%>, lng: <%=location.lng%> }, title: '<%=location.title%>' });
             <% } %>
              
             //Add Marker Function
@@ -248,13 +241,19 @@
 
                });
             }
-
+            
             function clearRoute(){
                 directionsDisplay.set('directions', null)
                 document.getElementById('starttext').value = ''
                 document.getElementById('endtext').value = ''
+                $('#dialog1').removeClass('close');
+                $('#dialog2').removeClass('close');
+                $('#autocomplete1 .close').removeClass('visible');
+                $('#autocomplete2 .close').removeClass('visible');
+                alreadyFilled = false;
+                alreadyFilled2 = false;
             }
-
+            
             var start, end
 
             document.getElementById('get').onclick= function(){
@@ -276,7 +275,7 @@
                 <% } %>
                 calculateRoute(startLat, startLng, endLat, endLng);
             }
-
+            
             document.getElementById('clear').onclick= function(){
                 clearRoute();
             }
@@ -295,10 +294,10 @@
                 <% } %>
                 
                 moveToLocation(searchLat, searchLng);
+                
             }
 
             function moveToLocation(searchLat, searchLng){
-                console.log(searchLat);
                 var center = new google.maps.LatLng(searchLat,searchLng);
                 map.panTo(center);
             }
