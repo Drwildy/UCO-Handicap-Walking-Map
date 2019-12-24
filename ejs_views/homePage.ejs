@@ -1,321 +1,355 @@
 <!-- ejs_views/homePage.ejs -->
-
 <!doctype html>
 <html lang = "en">
 
 <!-- displays head.ejs-->
 <head>
-    <!-- <% include head %> 
-
-    <!-- JQuery Script -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    
-    <!-- CSS STYLE -->
-    <base href="/">
-    <link href= "/assets/style.css" rel="stylesheet" type="text/css" />
-    
-    <!-- FOR GOOGLE MAP -->
-    <style>
-        #map{
-            height:400px;
-            width: 100%;
-        }
-        #origin-input, #destination-input{
-            background-color: #fff;
-            font-family: Roboto;
-            font-size: 15px;
-            font-weight: 300;
-            margin-left: 12px;
-            padding: 0 11px 0 13px;
-            text-overflow: ellipsis;
-            width: 200px;
-        }
-        #origin-input:focus, #destination-input:focus{
-            border-color:#4d90fe;
-        }        
-    </style>
+    <% include head %>   
 </head>
 
 <!-- displays header.ejs-->
-<body class = "container">
-<header>
-    <% include header %>
-</header>
+<body data-spy="scroll" data-target="#navbarResponsive"> 
 
-<!-- Edit the body of the front end here-->
-<main>
-    <!--Going to insert a search bar for the maps-->
-    
-    <!--The first function is to use autocomplete-->
-    <div class = 'mainDiv' style="display: none">
-        <input id="origin-input" class="controls" type="text"
-            placeholder="=Enter an origin location">
-        <input id="destination-input" class="controls" type="text"
-            placeholder="Enter a destination location">
-    </div>
+    <!-- Start Home Section -->
+    <div id="home">
+        <header>
+            <% include header %>
+        </header>
 
-    <div id = "map"></div>
-
-    <form id="routing">
-        <div id = "Starting">
-                Starting Location:<br>
-                <div class="autocomplete" id = 'autocomplete1'>
-                    <input id = "starttext" type="text" placeholder="What is your starting location?" >
-                    <span class = "close">Cancel</span>
-                    <div class= "dialog" id = 'dialog1'></div>
+        <!-- Start Landing Page Section-->
+        <div class="landing"> 
+            <div class="home-wrap">
+                <div class="home-inner">  
                 </div>
-        </div>
-        <div id = "Ending">
-                Ending Location<br>
-        <div class="autocomplete" id = 'autocomplete2'>
-            <input id = "endtext" type="text" placeholder="What is your ending location?" >
-            <span class = "close">Cancel</span>
-            <div class= "dialog" id = 'dialog2'></div>
-        </div>
+            </div>
         </div>
         
-    </form>
+        <div class="caption text-center">
+            <h1> Welcome to UCO Wheelchair Accessibility Map </h1>
+            <h3>Written by Devin Ashcraft</h3>
+            <a class="btn btn-outline-light btn-lg" href="#map">Get Started</a>
+        </div>
+        <!-- End Landing Page Section-->
+    </div>
+    <!-- End Home Section -->
 
-    <!-- <div>
-        <button type="submit" form = "routing" value = "submit"> Get Route </button>
-    </div> -->
-        <button id="clear">Clear</button>
-        <button id="search">Search</button>
-        <button id="get">Get Directions</button>
-    <script>
-        $(function AutoCompleteBox(){
-            var dID1 = '#dialog1';
-            var dID2 = '#dialog2';
-            var acID1 = '#autocomplete1';
-            var acID2 = '#autocomplete2';
-            alreadyFilled = false; //Global for the sake of clearing the field
-            alreadyFilled2 = false;
+    <!-- Start Map Section -->
+    <div id="map" class="offset"></div>
+
+    <div id="map2" class="offset">
+        <div class="jumbotron">
+            <div class="narrow">
+                <div class="col-12 text-center">
+                    <h3 class="heading">Directions Service</h3>
+                    <div class="heading-underline"></div>
+                </div>
+
+                <div class="row text-center">
+                    <div class="col-md-6">
+                        <h3 class="heading">Starting Location</h3>
+                        <div class="heading-underline"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <h3 class="heading">Ending Location</h3>
+                        <div class="heading-underline"></div>
+                    </div>
+                </div>
+
+                <div class="row text-center">
+                    <form id="routing">
+                        <div class="col-md-12">
+                            <div class="autocomplete" id = 'autocomplete1' style="width:50%;float:left;">
+                                <input id = "starttext" type="text" placeholder="What is your starting location?" >
+                                <span class = "close">Cancel</span>
+                                <div class= "dialog" id = 'dialog1'></div>
+                            </div>
+                            <div class="autocomplete" id = 'autocomplete2' style="width:50%;float:left; margin-left: 2.5rem;">
+                                <input id = "endtext" type="text" placeholder="What is your ending location?" >
+                                <span class = "close">Cancel</span>
+                                <div class= "dialog" id = 'dialog2'></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <a class ="btn btn-secondary btn-md" id="get" href="#map" >Get Directions</a>
+                    </div>
+                    <div class="col-md-4">
+                        <a class ="btn btn-secondary btn-md" id="search" href="#map">Search</a>
+                    </div>
+                    <div class="col-md-4">
+                        <a class ="btn btn-secondary btn-md" id="clear">Clear</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Map Section -->
+
+    <!-- Start Contact Section -->
+    <div id="contact" class="offset">
+        <div class="fixed-background">
+        <div class="jumbotron contacts">
+            <div class="col-12 text-center">
+                <h3 class="heading">Contact</h3>
+                <div class="heading-underline"></div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 contact">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img src="assets/Devin.jpg">
+                        </div>
+                        <div class="col-md-8">
+                            <blockquote>
+                                <i class="fa fa-quote-left"></i>
+                                This is some text that will be talking about myself.
+                                Please Hire me. I'm poor. :)
+                            </blockquote>
+                            <hr class="contact-hr">
+                            <cite>&#8212; Devin Ashcraft</cite>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fixed-wrap">
+                <div class="fixed"></div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <!-- End Contact Section -->
+
+    <!-- Start About Section -->
+    <div id="about" class="offset">
+        <!-- displays footer.ejs-->
+        <footer>
+            <% include footer %>
+        </footer>
+    </div>
+    <!-- End About Section -->
+
+
+        <!-- Edit the body of the front end here-->
+        <main>
+            <!--Going to insert a search bar for the maps-->
+            <script>
+                $(function AutoCompleteBox(){
+                    var dID1 = '#dialog1';
+                    var dID2 = '#dialog2';
+                    var acID1 = '#autocomplete1';
+                    var acID2 = '#autocomplete2';
+                    alreadyFilled = false; //Global for the sake of clearing the field
+                    alreadyFilled2 = false;
 
             
-            //Initialize autofill box with 
-            function initDialog(id){
-                clearDialog(id);
-                <% for (const location of results) { %>
-                     $(id).append('<div>' + '<%= location.title %>' + '<div>');
-                <% } %>
-            }
+                    //Initialize autofill box with 
+                    function initDialog(id){
+                        clearDialog(id);
+                        <% for (const location of results) { %>
+                            $(id).append('<div>' + '<%= location.title %>' + '<div>');
+                        <% } %>
+                    }
 
-            function clearDialog(id){
-                $(id).empty();
-            }
+                    function clearDialog(id){
+                        $(id).empty();
+                    }
 
-            initDialog('#dialog1');
-            initDialog('#dialog2');
+                    initDialog('#dialog1');
+                    initDialog('#dialog2');
             
-            $('#autocomplete1 input').click(function(){
-                if(!alreadyFilled){
-                    $('#dialog1').addClass('open');
+                    $('#autocomplete1 input').click(function(){
+                        if(!alreadyFilled){
+                            $('#dialog1').addClass('open');
+                        }
+                    });
+
+                    $('#autocomplete2 input').click(function(){
+                        if(!alreadyFilled2){
+                            $('#dialog2').addClass('open');
+                        }
+                     });
+
+                    $(document).click(function(event){
+                        $target = $(event.target);
+                        if(!$target.is('#starttext')){
+                        $('#dialog1').removeClass('open');
+                        }
+
+                        if(!$target.is('#endtext')){
+                        $('#dialog2').removeClass('open');
+                        }
+                    });
+
+                    $('body').on('click', '#dialog1 > div', function(){
+                        $('#autocomplete1 input').val($(this).text()).focus();
+                        $('#autocomplete1 .close').addClass('visible');
+                        $('#dialog1').removeClass('open');
+                        alreadyFilled = true;
+                    });
+
+                    $('body').on('click', '#dialog2 > div', function(){
+                        $('#autocomplete2 input').val($(this).text()).focus();
+                        $('#autocomplete2 .close').addClass('visible');
+                        $('#dialog2').removeClass('open');
+                        alreadyFilled2 = true;
+                    });
+
+                    $('#autocomplete1 .close').click(function() {
+                        alreadyFilled = false;
+                        $('#dialog1').removeClass('close');
+                        $('#autocomplete1 input').val('').focus();
+                        $(this).removeClass('visible');
+                    });
+
+                    $('#autocomplete2 .close').click(function() {
+                        alreadyFilled2 = false;
+                        $('#dialog2').removeClass('close');
+                        $('#autocomplete2 input').val('').focus();
+                        $(this).removeClass('visible');
+                    });
+
+                function match(str, id) {
+                    str = str.toLowerCase();
+                    clearDialog(id);
+        
+                    <% for (const location of results) { %>
+                        if( '<%= location.title %>'.toLowerCase().startsWith(str)){
+                            $(id).append('<div>' + '<%= location.title%>' + '</div>');
+                        }
+                    <% } %>
                 }
-            });
 
-            $('#autocomplete2 input').click(function(){
-                if(!alreadyFilled2){
-                    $('#dialog2').addClass('open');
-                }
-            });
+                    $('#autocomplete1 input').on('input', function(){
+                        $('#dialog1').addClass('open');
+                        alreadyFilled = false;
+                        match($(this).val(), '#dialog1');
+                    });
 
-            $(document).click(function(event){
-                $target = $(event.target);
-                if(!$target.is('#starttext')){
-                  $('#dialog1').removeClass('open');
-                }
-
-                if(!$target.is('#endtext')){
-                  $('#dialog2').removeClass('open');
-                }
-            });
-
-            $('body').on('click', '#dialog1 > div', function(){
-                $('#autocomplete1 input').val($(this).text()).focus();
-                $('#autocomplete1 .close').addClass('visible');
-                $('#dialog1').removeClass('open');
-                alreadyFilled = true;
-            });
-
-            $('body').on('click', '#dialog2 > div', function(){
-                $('#autocomplete2 input').val($(this).text()).focus();
-                $('#autocomplete2 .close').addClass('visible');
-                $('#dialog2').removeClass('open');
-                alreadyFilled2 = true;
-            });
-
-            $('#autocomplete1 .close').click(function() {
-                alreadyFilled = false;
-                $('#dialog1').removeClass('close');
-                $('#autocomplete1 input').val('').focus();
-                $(this).removeClass('visible');
-            });
-
-            $('#autocomplete2 .close').click(function() {
-                alreadyFilled2 = false;
-                $('#dialog2').removeClass('close');
-                $('#autocomplete2 input').val('').focus();
-                $(this).removeClass('visible');
-            });
-
-        function match(str, id) {
-            str = str.toLowerCase();
-            clearDialog(id);
- 
-            <% for (const location of results) { %>
-                if( '<%= location.title %>'.toLowerCase().startsWith(str)){
-                    $(id).append('<div>' + '<%= location.title%>' + '</div>');
-                }
-            <% } %>
-        }
-
-            $('#autocomplete1 input').on('input', function(){
-                $('#dialog1').addClass('open');
-                alreadyFilled = false;
-                match($(this).val(), '#dialog1');
-            });
-
-            $('#autocomplete2 input').on('input', function(){
-                $('#dialog2').addClass('open');
-                alreadyFilled2 = false;
-                match($(this).val(), '#dialog2');
-            });
-
-            /*
-            $('body').click(function(e){
-                if(!$(e.target).is('input, .close')){
-                    $('#dialog1').removeClass('open');
-                }
-            });*/
-
-
-            //initDialog();
-
-        })
-    </script>
-
-
-    <!-- Initialize map with markers from the DB -->
-    <script> 
-        function initMap(){
-
-            var directionsDisplay = new google.maps.DirectionsRenderer();
-            var directionsService = new google.maps.DirectionsService();
-            
-            //Map Options to dictate zoom and position
-            var options = {
-                zoom: 16, 
-                center: {lat:35.6543936, lng: -97.4714266}
-            }
-            //init map for view
-            var map = new google.maps.Map(document.getElementById('map'), options);
-                    
-            //Loop through DB and add markers
-            <% for (const location of results) { %>
-                addMarker({coords:{lat: <%=location.lat%>, lng: <%=location.lng%> }, title: '<%=location.title%>' });
-            <% } %>
-             
-            //Add Marker Function
-            function addMarker(props){
-                var marker = new google.maps.Marker({
-                    position: props.coords,
-                    map:map,
-                    title: props.title
+                    $('#autocomplete2 input').on('input', function(){
+                        $('#dialog2').addClass('open');
+                        alreadyFilled2 = false;
+                        match($(this).val(), '#dialog2');
+                    });
                 })
-            }
-            
-            directionsDisplay.setMap(map);
-
-            function calculateRoute(startLat, startLng, endLat, endLng){
-
-               var request = {
-                    origin: new google.maps.LatLng(startLat, startLng),
-                    destination: new google.maps.LatLng(endLat, endLng),
-                    travelMode: 'WALKING'
-               }
-
-               directionsService.route(request, function(result, status){
-                   if( status == 'OK'){
-                       directionsDisplay.setDirections(result);
-                   }
-
-               });
-            }
-            
-            function clearRoute(){
-                directionsDisplay.set('directions', null)
-                document.getElementById('starttext').value = ''
-                document.getElementById('endtext').value = ''
-                $('#dialog1').removeClass('close');
-                $('#dialog2').removeClass('close');
-                $('#autocomplete1 .close').removeClass('visible');
-                $('#autocomplete2 .close').removeClass('visible');
-                alreadyFilled = false;
-                alreadyFilled2 = false;
-            }
-            
-            var start, end
-
-            document.getElementById('get').onclick= function(){
-                start = document.getElementById("starttext").value;
-                end = document.getElementById("endtext").value;
-        
-                var startLat, startLng, endLat, endLng;
+            </script>
 
 
-                <% for (const location of results) { %>
-                    if(start == '<%= location.title%>'){
-                        startLat = <%=location.lat%>
-                        startLng = <%=location.lng%>
+            <!-- Initialize map with markers from the DB -->
+            <script> 
+                function initMap(){
+
+                    var directionsDisplay = new google.maps.DirectionsRenderer();
+                    var directionsService = new google.maps.DirectionsService();
+                    
+                    //Map Options to dictate zoom and position
+                    var options = {
+                        zoom: 16, 
+                        center: {lat:35.6543936, lng: -97.4714266}
                     }
-                    if(end == '<%= location.title%>'){
-                        endLat = <%=location.lat%>
-                        endLng = <%=location.lng%>
+                    //init map for view
+                    var map = new google.maps.Map(document.getElementById('map'), options);
+                            
+                    //Loop through DB and add markers
+                    <% for (const location of results) { %>
+                        addMarker({coords:{lat: <%=location.lat%>, lng: <%=location.lng%> }, title: '<%=location.title%>' });
+                    <% } %>
+                    
+                    //Add Marker Function
+                    function addMarker(props){
+                        var marker = new google.maps.Marker({
+                            position: props.coords,
+                            map:map,
+                            title: props.title
+                        })
                     }
-                <% } %>
-                calculateRoute(startLat, startLng, endLat, endLng);
-            }
-            
-            document.getElementById('clear').onclick= function(){
-                clearRoute();
-            }
+                    
+                    directionsDisplay.setMap(map);
 
-            var searchLat, searchLng
-            document.getElementById('search').onclick= function(){
-                start = document.getElementById("starttext").value;
-               
-                <% for (const location of results) { %>
-                    if(start == '<%= location.title%>'){
-                        searchLat = <%=location.lat%>
-                        searchLng = <%=location.lng%>
-                        // startCoords = new google.maps.LatLng(35.6543936, -97.4714266)
+                    function calculateRoute(startLat, startLng, endLat, endLng){
+
+                    var request = {
+                            origin: new google.maps.LatLng(startLat, startLng),
+                            destination: new google.maps.LatLng(endLat, endLng),
+                            travelMode: 'WALKING'
                     }
-                  
-                <% } %>
+
+                    directionsService.route(request, function(result, status){
+                        if( status == 'OK'){
+                            directionsDisplay.setDirections(result);
+                        }
+
+                    });
+                    }
+                    
+                    function clearRoute(){
+                        directionsDisplay.set('directions', null)
+                        document.getElementById('starttext').value = ''
+                        document.getElementById('endtext').value = ''
+                        $('#dialog1').removeClass('close');
+                        $('#dialog2').removeClass('close');
+                        $('#autocomplete1 .close').removeClass('visible');
+                        $('#autocomplete2 .close').removeClass('visible');
+                        alreadyFilled = false;
+                        alreadyFilled2 = false;
+                    }
+                    
+                    var start, end
+
+                    document.getElementById('get').onclick= function(){
+                        start = document.getElementById("starttext").value;
+                        end = document.getElementById("endtext").value;
                 
-                moveToLocation(searchLat, searchLng);
-                
-            }
-
-            function moveToLocation(searchLat, searchLng){
-                var center = new google.maps.LatLng(searchLat,searchLng);
-                map.panTo(center);
-            }
-        }
-    </script>
-    
-
-</main>
-
-<!-- displays footer.ejs-->
-<footer>
-    <% include footer %>
-</footer>
-
-<!-- Google Maps Script -->
-<!--<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAftGHvJnejXQm5k1jiLiBRsRwm5SXqzm8&callback=initMap"></script>-->
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAftGHvJnejXQm5k1jiLiBRsRwm5SXqzm8&callback=initMap"></script>
+                        var startLat, startLng, endLat, endLng;
 
 
-</body>
+                        <% for (const location of results) { %>
+                            if(start == '<%= location.title%>'){
+                                startLat = <%=location.lat%>
+                                startLng = <%=location.lng%>
+                            }
+                            if(end == '<%= location.title%>'){
+                                endLat = <%=location.lat%>
+                                endLng = <%=location.lng%>
+                            }
+                        <% } %>
+                        calculateRoute(startLat, startLng, endLat, endLng);
+                    }
+                    
+                    document.getElementById('clear').onclick= function(){
+                        clearRoute();
+                    }
+
+                    var searchLat, searchLng
+                    document.getElementById('search').onclick= function(){
+                        start = document.getElementById("starttext").value;
+                    
+                        <% for (const location of results) { %>
+                            if(start == '<%= location.title%>'){
+                                searchLat = <%=location.lat%>
+                                searchLng = <%=location.lng%>
+                                // startCoords = new google.maps.LatLng(35.6543936, -97.4714266)
+                            }
+                        
+                        <% } %>
+                        
+                        moveToLocation(searchLat, searchLng);
+                        
+                    }
+
+                    function moveToLocation(searchLat, searchLng){
+                        var center = new google.maps.LatLng(searchLat,searchLng);
+                        map.panTo(center);
+                    }
+                }
+            </script>
+
+        </main>
+        <!-- Google Maps Script -->
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAftGHvJnejXQm5k1jiLiBRsRwm5SXqzm8&callback=initMap"></script>
+    </body>
 </html>
